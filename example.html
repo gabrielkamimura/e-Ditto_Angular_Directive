@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Exemplo de funcionamento do e-Ditto no AngularJS</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="bower_components/eDitto/src/editor.css" />
+  </head>
+  <body data-ng-app="teste" data-ng-controller="TesteCtrl">
+
+    <editto data-ng-model="teste" data-opcoes="opcoes"></editto> {{ teste }}
+
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/eDitto/src/editto.js"></script>
+    <script src="src/components/editor.js"></script>
+
+    <script>
+      var app = angular.module('teste', ['e-Ditto'])
+        .controller('TesteCtrl', ['$scope', function($scope) {
+          $scope.teste = '';
+
+          // Alterações nas opções padrão
+          $scope.opcoes = {disableDefaultComponents: false};
+        }])
+    </script>
+  </body>
+</html>
