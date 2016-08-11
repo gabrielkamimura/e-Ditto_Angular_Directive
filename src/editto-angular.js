@@ -1,5 +1,12 @@
 'use strict';
 
+window.generateRandomEdittoID = function() {
+  var S4 = function() {
+     return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+  };
+  return window.lastEdittoId = (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+};
+
 var app = angular.module('e-Ditto', [])
 
 .directive('editto', ['$compile', function($compile) {
@@ -76,7 +83,8 @@ var app = angular.module('e-Ditto', [])
         scope: {
             icone: '=?',
             title: '=?',
-            evClick: '&ngClick'
+            evClick: '&ngClick',
+            verificarBotao: '=?'
         },
         require: '^edittoButtonGroup',
 
@@ -88,6 +96,12 @@ var app = angular.module('e-Ditto', [])
     ['$scope',
     function($scope) {
           var personalizacao = new eDittoButton($scope.$parent.$parent.grupoBotoes, $scope.icone, $scope.title);
+
+          if ($scope.verificarBotao) {
+            // Buscando a barra de botões no escopo da diretiva editto
+            $scope.$parent.$parent.$parent.$parent.barraBotoes.adicionarBotaoVerificacao(personalizacao, $scope.verificarBotao)
+          }
+
           personalizacao.getButtonDOM().onclick = function() {
               $scope.evClick();
           }

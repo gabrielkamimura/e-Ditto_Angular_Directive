@@ -11,14 +11,21 @@
     <editto data-ng-model="teste" data-opcoes="opcoes" data-documento="documento">
       <editto-button-group>
         <editto-button data-icone="'smile-o'" data-title="'Teste'" data-ng-click="alert()"></editto-button>
+        <editto-button data-icone="'smile-o'" data-title="'Teste'" data-ng-click="alert()" data-verificar-botao="'bold'"></editto-button>
+        <editto-button data-icone="'smile-o'" data-title="'Teste'" data-ng-click="alert()"></editto-button>
       </editto-button-group>
 
+      <editto-button-group>
+        <editto-button data-icone="'smile-o'" data-title="'Teste'" data-ng-click="alert()"></editto-button>
+        <editto-button data-icone="'smile-o'" data-title="'Teste'" data-ng-click="alert()"></editto-button>
+        <editto-button data-icone="'smile-o'" data-title="'Teste'" data-ng-click="alert()"></editto-button>
+      </editto-button-group>
     </editto>
 
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/eDitto/src/editto.js"></script>
-    <script src="src/components/editor.js"></script>
+    <script src="src/editto-angular.js"></script>
 
     <script>
       var app = angular.module('teste', ['e-Ditto'])
