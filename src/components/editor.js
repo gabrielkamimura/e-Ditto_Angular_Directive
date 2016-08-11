@@ -40,33 +40,6 @@ var app = angular.module('e-Ditto', [])
         $scope.documento = $scope.editor.obterDocumento();
         $scope.barraBotoes = $scope.editor.obterBarraBotoes();
 
-        this.obterBarraBotoes = function() {
-            return $scope.barraBotoes;
-        }
-
-        this.obterDocumento = function() {
-          return $scope.documento;
-        }
-
-        this.gruposBotoes = [];
-
-        /**
-         * Retorna o pultimo grupo de botões, ou seja, aquele em que deve ser adicionado algum novo botão
-         * @return {[type]} [description]
-         */
-        this.obterUltimoListaBotoes = function() {
-          var teste = (this.gruposBotoes);
-          return teste[teste.length - 1];
-        }
-
-        /**
-         * Adiciona um grupo de botões a barra
-         * @return {[type]} [description]
-         */
-        this.adicionarBotao = function() {
-
-        }
-
     }
 ])
 
@@ -80,9 +53,6 @@ var app = angular.module('e-Ditto', [])
         transclude: true,
         replace: true,
         require: '^editto',
-        link: function($scope, element, attrs, edittoCtrl) {
-          //$scope.barraBotoes = edittoCtrl.obterBarraBotoes();
-        },
         controller: 'eDittoButtonGroupCtrl',
         template: '<div ng-transclude></div>'
     };
@@ -110,11 +80,6 @@ var app = angular.module('e-Ditto', [])
         },
         require: '^edittoButtonGroup',
 
-        link: function($scope, element, attrs, edittoButtonGroupCtrl) {
-          $scope.grupoBotoes = edittoButtonGroupCtrl.obterGrupoBotoes();
-          $scope.obterGrupoBotoes = edittoButtonGroupCtrl.obterGrupoBotoes;
-        },
-
         controller: 'eDittoButtonCtrl'
     };
 }])
@@ -122,12 +87,9 @@ var app = angular.module('e-Ditto', [])
 .controller('eDittoButtonCtrl',
     ['$scope',
     function($scope) {
-        console.log($scope.evClick);
           var personalizacao = new eDittoButton($scope.$parent.$parent.grupoBotoes, $scope.icone, $scope.title);
           personalizacao.getButtonDOM().onclick = function() {
-            console.log("Clicou no botão");
               $scope.evClick();
           }
-
     }
 ]);

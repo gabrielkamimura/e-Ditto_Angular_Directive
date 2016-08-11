@@ -8,10 +8,11 @@
   </head>
   <body data-ng-app="teste" data-ng-controller="TesteCtrl">
 
-    <editto data-ng-model="teste" data-opcoes="opcoes" data-barra-documento="documento">
+    <editto data-ng-model="teste" data-opcoes="opcoes" data-documento="documento">
       <editto-button-group>
         <editto-button data-icone="'smile-o'" data-title="'Teste'" data-ng-click="alert()"></editto-button>
       </editto-button-group>
+
     </editto>
 
     <script src="bower_components/angular/angular.js"></script>
@@ -28,7 +29,7 @@
           $scope.opcoes = {disableDefaultComponents: false};
 
           $scope.alert = function() {
-            console.log($scope.documento);
+            $scope.documento.inserirTexto(":)");
           }
         }])
     </script>
