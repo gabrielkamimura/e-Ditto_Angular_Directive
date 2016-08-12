@@ -1,12 +1,5 @@
 'use strict';
 
-window.generateRandomEdittoID = function() {
-  var S4 = function() {
-     return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-  };
-  return window.lastEdittoId = (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
-};
-
 var app = angular.module('e-Ditto', [])
 
 .directive('editto', ['$compile', function($compile) {

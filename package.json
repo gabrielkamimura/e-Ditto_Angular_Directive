@@ -1,0 +1,11 @@
+{
+    "name": "eDitto-Angular",
+    "description": "Diretiva para AngularJS do eDitto",
+    "dependencies": {
+        "bower": "1.3.12",
+        "gulp": "*",
+        "gulp-concat": "*",
+        "gulp-uglify": "*",
+        "pump": "*"
+    }
+  }
