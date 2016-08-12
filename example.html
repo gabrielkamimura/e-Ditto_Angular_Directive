@@ -19,8 +19,10 @@
         <editto-button data-icone="'smile-o'" data-title="'Teste'" data-ng-click="alert()"></editto-button>
         <editto-button data-icone="'smile-o'" data-title="'Teste'" data-ng-click="alert()"></editto-button>
         <editto-button data-icone="'smile-o'" data-title="'Teste'" data-ng-click="alert()"></editto-button>
+        <editto-select data-ng-model="cor" data-title="'Cores'" data-ng-change="escreveCor(cor)" data-opcoes="opcoesSelect" data-verificar-select="'forecolor'"></editto-button>
       </editto-button-group>
     </editto>
+    {{cor}}
 
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -33,10 +35,36 @@
           $scope.teste = '';
 
           // Alterações nas opções padrão
-          $scope.opcoes = {disableDefaultComponents: false};
+          $scope.opcoes = {disableDefaultComponents: true};
+
+          $scope.opcoesSelect = [
+              {texto: 'Preto', valor: "rgb(0, 0, 0)"},
+              {texto: 'Cinza', valor: "rgb(158, 158, 158)"},
+              {texto: 'Marrom', valor: "rgb(121, 85, 72)"},
+              {texto: 'Azul', valor: "rgb(33, 150, 243)"},
+              {texto: 'Vermelho', valor: "rgb(244, 67, 54)"},
+              {texto: 'Amarelo', valor: "rgb(255, 235, 59)"},
+              {texto: 'Verde', valor: "rgb(76, 175, 80)"},
+              {texto: 'Laranja', valor: "rgb(255, 152, 0)"},
+              {texto: 'Roxo', valor: "rgb(156, 39, 176)"},
+              {texto: 'Rosa', valor: "rgb(233, 30, 99)"},
+              {texto: 'Ciano', valor: "rgb(0, 188, 212)"},
+              {texto: 'Azul claro', valor: "rgb(3, 169, 244)"},
+              {texto: 'Índigo', valor: "rgb(63, 81, 181)"},
+              {texto: 'Lima', valor: "rgb(205, 220, 57)"},
+              {texto: 'Laranja Escuro', valor: "rgb(255, 87, 34)"},
+              {texto: 'Rosa Claro', valor: "rgb(248, 187, 208)"},
+              {texto: 'Teal', valor: "rgb(0, 150, 136)"},
+              {texto: 'Roxo Escuro', valor: "rgb(103, 58, 183)"}
+          ];
 
           $scope.alert = function() {
             $scope.documento.inserirTexto(":)");
+          }
+
+          $scope.escreveCor = function(valor) {
+            documento.formatar('forecolor', valor);
+            //$scope.documento.inserirTexto(":)");
           }
         }])
     </script>

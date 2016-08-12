@@ -106,4 +106,47 @@ var app = angular.module('e-Ditto', [])
               $scope.evClick();
           }
     }
+])
+
+.directive('edittoSelect', ['$compile', function($compile) {
+    return {
+        restrict: 'AE',
+        scope: {
+            title: '=?',
+            evChange: '&ngChange',
+            verificarSelect: '=?',
+            opcoes: '=?',
+            myDirectiveVar: '=ngModel'
+        },
+        require: '^edittoButtonGroup',
+
+        controller: 'eDittoSelectCtrl'
+    };
+}])
+
+.controller('eDittoSelectCtrl',
+    ['$scope',
+    function($scope) {
+        if ($scope.opcoes) {
+            var personalizacao = new eDittoSelect($scope.$parent.$parent.grupoBotoes, $scope.title, $scope.opcoes);
+
+            $scope.myDirectiveVar = personalizacao.getValue();
+
+            if ($scope.verificarSelect) {
+              // Buscando a barra de botões no escopo da diretiva editto
+              $scope.$parent.$parent.$parent.$parent.barraBotoes.adicionarBotaoVerificacao(personalizacao, $scope.verificarSelect)
+            }
+            personalizacao.getButtonDOM().onchange = function() {
+                $scope.myDirectiveVar = personalizacao.getValue();
+            }
+
+            var cont = 0; //Contador para não acionar função ao entrar inicialmente
+            $scope.$watch('myDirectiveVar', function(myDirectiveVar) {
+              if (cont) {
+                $scope.evChange();
+              }
+              cont++;
+            })
+        }
+    }
 ]);
