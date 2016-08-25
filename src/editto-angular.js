@@ -33,7 +33,7 @@ var app = angular.module('e-Ditto', [])
         // Refazendo manualmente passagem de valor
         var passaValor = setInterval(function() {
             $scope.editor.obterDocumento().setValue();
-            $scope.myDirectiveVar = $scope.editor.obterDocumento().frame.body.innerHTML;
+            $scope.myDirectiveVar = $scope.editor.obterDocumento().frame.body.innerHTML  || "";
             $scope.$apply();
         }, 500);
 
@@ -97,6 +97,7 @@ var app = angular.module('e-Ditto', [])
 
           personalizacao.getButtonDOM().onclick = function() {
               $scope.evClick();
+              $scope.$parent.$parent.$parent.$parent.barraBotoes.verificarBotoes();
           }
     }
 ])
@@ -121,6 +122,7 @@ var app = angular.module('e-Ditto', [])
     ['$scope',
     function($scope) {
         if ($scope.opcoes) {
+            
             var personalizacao = new eDittoSelect($scope.$parent.$parent.grupoBotoes, $scope.title, $scope.opcoes);
 
             $scope.myDirectiveVar = personalizacao.getValue();
@@ -137,6 +139,8 @@ var app = angular.module('e-Ditto', [])
             $scope.$watch('myDirectiveVar', function(myDirectiveVar) {
               if (cont) {
                 $scope.evChange();
+                $scope.$parent.$parent.$parent.$parent.barraBotoes.verificarBotoes();
+                $scope.myDirectiveVar = undefined;
               }
               cont++;
             })

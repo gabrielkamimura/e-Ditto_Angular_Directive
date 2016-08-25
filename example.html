@@ -21,6 +21,9 @@
         <editto-button data-icone="'smile-o'" data-title="'Teste'" data-ng-click="alert()"></editto-button>
       </editto-button-group>
       <editto-button-group>
+        <editto-select data-ng-model="formatoSelecionado" data-title="'formatoSelecionado'" data-ng-change="formatarTexto(formatoSelecionado)" data-opcoes="textFormats" data-verificar-select="'formatblock'"></editto-select>
+      </editto-button-group>
+      <editto-button-group>
         <editto-select data-ng-model="cor" data-title="'Cores'" data-ng-change="escreveCor(cor)" data-opcoes="opcoesSelect" data-verificar-select="'forecolor'"></editto-button>
       </editto-button-group>
     </editto>
@@ -67,6 +70,21 @@
             documento.formatar('forecolor', valor);
             //$scope.documento.inserirTexto(":)");
           }
+          
+        $scope.textFormats = [
+            {texto: 'Formato'},
+            {texto: 'Título de seção', valor: "h4"},
+            {texto: 'Subtítulo de seção', valor: "h5"},
+            {texto: 'Parágrafo', valor: "p"},
+        ];
+          
+        /**
+         * Formata o texto do documento
+         */
+        $scope.formatarTexto = function(formato) {
+            console.log(formato);
+            $scope.documento.formatar('formatblock', formato);
+        };
         }])
     </script>
   </body>
