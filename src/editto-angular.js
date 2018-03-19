@@ -13,7 +13,28 @@ var app = angular.module('e-Ditto', [])
         },
         transclude: true,
         replace: true,
-        template: '<div><textarea data-ng-model="myDirectiveVar" id="meuTextarea"></textarea><div data-ng-transclude></siv></div>',
+        template: '<div><textarea data-ng-model="myDirectiveVar"></textarea><div data-ng-transclude></siv></div>',
+        link: function($scope, elem, attr) { 
+            var textarea = elem[0].querySelector('textarea');
+            // Caso não sejam definidas propriedades específicas
+            $scope.opcoes = $scope.opcoes || {};
+
+            textarea.value = $scope.myDirectiveVar;
+            $scope.editor = new eDitto(textarea, $scope.opcoes);
+
+            // Parar cópia automática realizada pelo editor
+            $scope.editor.obterDocumento().pararPassag();
+
+            // Refazendo manualmente passagem de valor
+            var passaValor = setInterval(function() {
+                $scope.editor.obterDocumento().setValue();
+                $scope.myDirectiveVar = $scope.editor.obterDocumento().frame.body.innerHTML  || "";
+                $scope.$apply();
+            }, 500);
+
+            $scope.documento = $scope.editor.obterDocumento();
+            $scope.barraBotoes = $scope.editor.obterBarraBotoes();
+        },
         controller: 'EdittoCtrl'
     };
 }])
@@ -21,24 +42,7 @@ var app = angular.module('e-Ditto', [])
 .controller('EdittoCtrl',
     ['$scope',
     function($scope) {
-        // Caso não sejam definidas propriedades específicas
-        $scope.opcoes = $scope.opcoes || {};
-
-        document.getElementById('meuTextarea').value = $scope.myDirectiveVar;
-        $scope.editor = new eDitto("meuTextarea", $scope.opcoes);
-
-        // Parar cópia automática realizada pelo editor
-        $scope.editor.obterDocumento().pararPassag();
-
-        // Refazendo manualmente passagem de valor
-        var passaValor = setInterval(function() {
-            $scope.editor.obterDocumento().setValue();
-            $scope.myDirectiveVar = $scope.editor.obterDocumento().frame.body.innerHTML  || "";
-            $scope.$apply();
-        }, 500);
-
-        $scope.documento = $scope.editor.obterDocumento();
-        $scope.barraBotoes = $scope.editor.obterBarraBotoes();
+        
 
     }
 ])
@@ -54,7 +58,13 @@ var app = angular.module('e-Ditto', [])
         replace: true,
         require: '^editto',
         controller: 'eDittoButtonGroupCtrl',
-        template: '<div ng-transclude></div>'
+        template: '<div ng-transclude></div>',
+        link: function($scope, elem, attr) { 
+            this.obterGrupoBotoes = function() {
+                return $scope.grupoBotoes;
+              }
+              $scope.grupoBotoes = new eDittoButtonGroup($scope.$parent.$parent.barraBotoes);
+        }
     };
 }])
 
@@ -62,10 +72,7 @@ var app = angular.module('e-Ditto', [])
     ['$scope',
     function($scope) {
 
-      this.obterGrupoBotoes = function() {
-        return $scope.grupoBotoes;
-      }
-      $scope.grupoBotoes = new eDittoButtonGroup($scope.$parent.$parent.barraBotoes);
+      
 
     }
 ])
@@ -81,24 +88,27 @@ var app = angular.module('e-Ditto', [])
         },
         require: '^edittoButtonGroup',
 
-        controller: 'eDittoButtonCtrl'
+        controller: 'eDittoButtonCtrl',
+        link: function($scope, elem, attr) { 
+            var personalizacao = new eDittoButton($scope.$parent.$parent.grupoBotoes, $scope.icone, $scope.title);
+
+              if ($scope.verificarBotao) {
+                // Buscando a barra de botões no escopo da diretiva editto
+                $scope.$parent.$parent.$parent.$parent.barraBotoes.adicionarBotaoVerificacao(personalizacao, $scope.verificarBotao)
+              }
+
+              personalizacao.getButtonDOM().onclick = function() {
+                  $scope.evClick();
+                  $scope.$parent.$parent.$parent.$parent.barraBotoes.verificarBotoes();
+              }
+        }
     };
 }])
 
 .controller('eDittoButtonCtrl',
     ['$scope',
     function($scope) {
-          var personalizacao = new eDittoButton($scope.$parent.$parent.grupoBotoes, $scope.icone, $scope.title);
-
-          if ($scope.verificarBotao) {
-            // Buscando a barra de botões no escopo da diretiva editto
-            $scope.$parent.$parent.$parent.$parent.barraBotoes.adicionarBotaoVerificacao(personalizacao, $scope.verificarBotao)
-          }
-
-          personalizacao.getButtonDOM().onclick = function() {
-              $scope.evClick();
-              $scope.$parent.$parent.$parent.$parent.barraBotoes.verificarBotoes();
-          }
+         
     }
 ])
 
@@ -114,14 +124,9 @@ var app = angular.module('e-Ditto', [])
         },
         require: '^edittoButtonGroup',
 
-        controller: 'eDittoSelectCtrl'
-    };
-}])
-
-.controller('eDittoSelectCtrl',
-    ['$scope',
-    function($scope) {
-        if ($scope.opcoes) {
+        controller: 'eDittoSelectCtrl',
+        link: function($scope, elem, attr) { 
+            if ($scope.opcoes) {
             
             var personalizacao = new eDittoSelect($scope.$parent.$parent.grupoBotoes, $scope.title, $scope.opcoes);
 
@@ -145,5 +150,14 @@ var app = angular.module('e-Ditto', [])
               cont++;
             })
         }
+        }
+    };
+}])
+
+
+.controller('eDittoSelectCtrl',
+    ['$scope',
+    function($scope) {
+        
     }
 ]);

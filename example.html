@@ -3,34 +3,32 @@
   <head>
     <title>Exemplo de funcionamento do e-Ditto no AngularJS</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
-    <link rel="stylesheet" href="bower_components/eDitto/src/editor.css" />
+    <link rel="stylesheet" type="text/css" href="bower_components/eDitto/src/themes/editto-cyan-theme.css" />
   </head>
   <body data-ng-app="teste" data-ng-controller="TesteCtrl">
 
     <editto data-ng-model="teste" data-opcoes="opcoes" data-documento="documento">
       <editto-button-group>
-        <editto-button data-icone="'smile-o'" data-title="'Teste'" data-ng-click="alert()"></editto-button>
-        <editto-button data-icone="'smile-o'" data-title="'Teste'" data-ng-click="alert()" data-verificar-botao="'bold'"></editto-button>
-        <editto-button data-icone="'smile-o'" data-title="'Teste'" data-ng-click="alert()"></editto-button>
+        <editto-button data-icone="'@eDittoIcons/align_right.svg'" data-title="'Teste'" data-ng-click="alert()"></editto-button>
+        <editto-button data-icone="'@eDittoIcons/align_right.svg'" data-title="'Teste'" data-ng-click="alert()" data-verificar-botao="'bold'"></editto-button>
+        <editto-button data-icone="'@eDittoIcons/align_right.svg'" data-title="'Teste'" data-ng-click="alert()"></editto-button>
       </editto-button-group>
 
       <editto-button-group>
-        <editto-button data-icone="'smile-o'" data-title="'Teste'" data-ng-click="alert()"></editto-button>
-        <editto-button data-icone="'smile-o'" data-title="'Teste'" data-ng-click="alert()"></editto-button>
-        <editto-button data-icone="'smile-o'" data-title="'Teste'" data-ng-click="alert()"></editto-button>
+        <editto-button data-icone="'@eDittoIcons/align_right.svg'" data-title="'Teste'" data-ng-click="alert()"></editto-button>
+        <editto-button data-icone="'@eDittoIcons/align_right.svg'" data-title="'Teste'" data-ng-click="alert()"></editto-button>
+        <editto-button data-icone="'@eDittoIcons/align_right.svg'" data-title="'Teste'" data-ng-click="alert()"></editto-button>
       </editto-button-group>
       <editto-button-group>
         <editto-select data-ng-model="formatoSelecionado" data-title="'formatoSelecionado'" data-ng-change="formatarTexto(formatoSelecionado)" data-opcoes="textFormats" data-verificar-select="'formatblock'"></editto-select>
       </editto-button-group>
       <editto-button-group>
-        <editto-select data-ng-model="cor" data-title="'Cores'" data-ng-change="escreveCor(cor)" data-opcoes="opcoesSelect" data-verificar-select="'forecolor'"></editto-button>
+        <editto-select data-ng-model="cor" data-title="'Cores'" data-ng-change="escreveCor(cor)" data-opcoes="opcoesSelect" data-verificar-select="'forecolor'"></editto-select>
       </editto-button-group>
     </editto>
 
     <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/eDitto/src/editto.js"></script>
+    <script src="bower_components/eDitto/src/dist/editto.js"></script>
     <script src="src/editto-angular.js"></script>
 
     <script>
